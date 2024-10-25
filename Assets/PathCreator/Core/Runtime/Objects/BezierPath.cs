@@ -19,7 +19,7 @@ namespace PathCreation
 	public class BezierPath
 	{
 		public event System.Action OnModified;
-		public enum ControlMode { Aligned, Mirrored, Free, Automatic };
+		public enum ControlMode { Aligned, Mirrored, Free, Automatic }; 
 
 		#region Fields
 
