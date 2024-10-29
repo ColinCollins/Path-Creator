@@ -12,6 +12,7 @@ namespace PathCreation.Examples
 
         public override void OnInspectorGUI()
         {
+            // base.OnInspectorGUI();
             using (var check = new EditorGUI.ChangeCheckScope())
             {
                 DrawDefaultInspector();
@@ -40,6 +41,22 @@ namespace PathCreation.Examples
                     SceneView.RepaintAll();
                 }
             }
+
+            /*if (GUILayout.Button("Play"))
+            {
+                var creator = target as RoadMeshCreator;
+                if (creator == null)
+                    return;
+                creator.Play();
+            }
+            
+            if (GUILayout.Button("StopPlay"))
+            {
+                var creator = target as RoadMeshCreator;
+                if (creator == null)
+                    return;
+                creator.Stop();
+            }*/
 
         }
 

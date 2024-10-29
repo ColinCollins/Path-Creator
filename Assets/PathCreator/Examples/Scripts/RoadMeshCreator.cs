@@ -3,7 +3,7 @@ using PathCreation.Utility;
 using UnityEngine;
 
 namespace PathCreation.Examples {
-    public class RoadMeshCreator : PathSceneTool {
+    public partial class RoadMeshCreator : PathSceneTool {
         [Header ("Road settings")]
         public float roadWidth = .4f;
         [Range (0, 1.5f)]
@@ -22,6 +22,14 @@ namespace PathCreation.Examples {
         MeshRenderer meshRenderer;
         Mesh mesh;
 
+        public Vector3[] verts;
+        public Vector2[] uvs;
+        public Vector3[] normals;
+
+        public int[] roadTriangles;
+        public int[] underRoadTriangles;
+        public int[] sideOfRoadTriangles;
+
         protected override void PathUpdated () {
             if (pathCreator != null) {
                 AssignMeshComponents ();
@@ -29,16 +37,17 @@ namespace PathCreation.Examples {
                 CreateRoadMesh ();
             }
         }
-
-        void CreateRoadMesh () {
-            Vector3[] verts = new Vector3[path.NumPoints * 8];
-            Vector2[] uvs = new Vector2[verts.Length];
-            Vector3[] normals = new Vector3[verts.Length];
+        
+        void CreateRoadMesh () 
+        {
+            verts = new Vector3[path.NumPoints * 8];
+            uvs = new Vector2[verts.Length];
+            normals = new Vector3[verts.Length];
 
             int numTris = 2 * (path.NumPoints - 1) + ((path.isClosedLoop) ? 2 : 0);
-            int[] roadTriangles = new int[numTris * 3];
-            int[] underRoadTriangles = new int[numTris * 3];
-            int[] sideOfRoadTriangles = new int[numTris * 2 * 3];
+            roadTriangles = new int[numTris * 3];
+            underRoadTriangles = new int[numTris * 3];
+            sideOfRoadTriangles = new int[numTris * 2 * 3];
 
             int vertIndex = 0;
             int triIndex = 0;
@@ -115,6 +124,13 @@ namespace PathCreation.Examples {
             mesh.SetTriangles (underRoadTriangles, 1);
             mesh.SetTriangles (sideOfRoadTriangles, 2);
             mesh.RecalculateBounds ();
+
+            // save
+            /*initPoint = new Vector3[verts.Length];
+            for (int i = 0; i < verts.Length; i++)
+            {
+                initPoint[i] = verts[i];
+            }*/
         }
 
         // Add MeshRenderer and MeshFilter components to this gameobject if not already attached
